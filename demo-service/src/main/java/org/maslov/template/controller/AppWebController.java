@@ -2,6 +2,7 @@ package org.maslov.template.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.maslov.template.service.DemoService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ public class AppWebController {
     private final DemoService demoService;
 
 
-    public AppWebController(DemoService demoService) {
+    public AppWebController(@Qualifier("configurableDemoService") DemoService demoService) {
         this.demoService = demoService;
     }
 
