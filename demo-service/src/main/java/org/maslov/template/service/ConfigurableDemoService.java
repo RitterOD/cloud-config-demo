@@ -1,11 +1,14 @@
 package org.maslov.template.service;
 
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RefreshScope
 public class ConfigurableDemoService implements DemoService{
 
 
@@ -19,7 +22,7 @@ public class ConfigurableDemoService implements DemoService{
                                    @Value("${demoservice.contractAddress}") String contractAddress,
                                    @Value("${demoservice.inworkerAddress}") String inworkerAddress,
                                    @Value("${demoservice.inworkerPrivateKey}") String inworkerPrivateKey,
-                                   @Value("${demoservice.commitHash}") String commitHash) {
+                                   @Value("${config.client.version}") String commitHash) {
         this.network = network;
         this.contractAddress = contractAddress;
         this.inworkerAddress = inworkerAddress;
@@ -53,6 +56,7 @@ public class ConfigurableDemoService implements DemoService{
     }
 
     @Override
+    @PreDestroy
     public void preDestroy() {
         log.info("in predestroy: " + this.getClass().getSimpleName());
     }

@@ -3,6 +3,8 @@ package org.maslov.template.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.maslov.template.service.DemoService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.endpoint.event.RefreshEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +17,12 @@ import java.util.Map;
 public class AppWebController {
 
     private final DemoService demoService;
+    private final ApplicationEventPublisher eventPublisher;
 
 
-    public AppWebController(@Qualifier("configurableDemoService") DemoService demoService) {
+    public AppWebController(@Qualifier("configurableDemoService") DemoService demoService, ApplicationEventPublisher eventPublisher) {
         this.demoService = demoService;
+        this.eventPublisher = eventPublisher;
     }
 
 
@@ -36,6 +40,7 @@ public class AppWebController {
     @PostMapping("/reload")
     public ModelAndView processReload() {
         log.info("IN RELOAD");
+        eventPublisher.publishEvent(new RefreshEvent(this, "RefreshEvent", "Refreshing scope"));
         return new ModelAndView("redirect:/");
     }
 }
