@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DEMO SERVICE</title>
+</head>
+<body>
+<h1>DEMO SERVICE</h1>
+<h2>Get configuration from spring configuration service</h2>
+<p>Network:</p>
+<p th:text="${network}">network name</p>
+
+<p>Contract address:</p>
+<p th:text="${contractAddress}">contract address</p>
+
+
+<p>Inworker address:</p>
+<p th:text="${invorkerAddress}">inworker address</p>
+
+<p>Inworker private key:</p>
+<p th:text="${invorkerPrivateKey}">inworker private key</p>
+
+<p>Commit:</p>
+<p th:text="${commit}">commit hash</p>
+
+<form th:action="@{/reload}" method="post">
+    <button type="submit">RELOAD CONFIGURATION FROM SERVER</button>
+</form>
+</body>
+</html>
